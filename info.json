@@ -2,7 +2,7 @@
     "name": "simple-audio-importer",
     "version": "1.0.0",
     "title": "Simple Audio Importer",
-    "description": "...",
+    "description": "A simple mod for importing audios/music/soundFXs into Factorio, mainly made for non-modders and being used in servers (to play music and prank your friends xd)",
     "author": "Factory077",
     "factorio_version": "2.0",
     "dependencies": ["base"]
