@@ -14,6 +14,8 @@ The mod works with 2 parts: the importer (this mod) which scans the list of mods
 
 3. Move all the custom `.zip` files to the game's mods folder, and then you can start Factorio.
 
+All imported sounds will be available through the **Programmable Speaker**, inside the "_instrument category_" called **Simple Audio Importer**.
+
 # Manual Tutorial (using the template)
 
 Here we're gonna create a custom build manually (intended for more experienced users, probably modders themselves).
@@ -149,7 +151,5 @@ You can also open File Explorer, click on the address bar, type `%APPDATA%\Facto
 ```
 
 ## Step 8 — Launch Factorio
-
-Start Factorio. Your sounds will be available through the **Programmable Speaker**, inside the _"instrument"_ called **Simple Audio Importer**.
 
 From here you can do 2 things: share the `.zip` file with your friends (if you have a private server), or publish it to the **Mod Portal** (so your players can automatically download and keep it updated when joining a server).
