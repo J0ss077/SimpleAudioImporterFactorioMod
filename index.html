@@ -244,23 +244,12 @@
 
         <h2>Step 2 — Mod info</h2>
 
-        <label for="mod-name"
-            >Internal name
-            <span class="hint"
-                >— lowercase letters, numbers, hyphens. No spaces.</span
-            ></label
-        >
-        <input
-            type="text"
-            id="mod-name"
-            placeholder="my-custom-music"
-            maxlength="60"
-        />
-        <div class="field-error" id="err-name"></div>
-
         <label for="mod-title"
             >Title
-            <span class="hint">— shown in Factorio's mod menu</span></label
+            <span class="hint"
+                >— shown in Factorio's mod menu. Only letters, numbers, spaces,
+                <code>-</code> and <code>_</code>.</span
+            ></label
         >
         <input
             type="text"
@@ -288,10 +277,6 @@
             maxlength="60"
         />
         <div class="field-error" id="err-author"></div>
-
-        <label for="mod-version">Version</label>
-        <input type="text" id="mod-version" value="1.0.0" maxlength="20" />
-        <div class="field-error" id="err-version"></div>
 
         <h2>Step 3 — Download</h2>
 
@@ -407,20 +392,15 @@
             }
 
             // Validation
-            function checkName(v) {
+            function checkTitle(v) {
                 if (!v) return "Required.";
                 if (v.length < 3) return "Minimum 3 characters.";
-                if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(v))
-                    return "Only lowercase letters, numbers, and hyphens. Cannot start or end with a hyphen.";
-                if (v === "base" || v === "simple-audio-importer")
+                if (!/^[a-zA-Z0-9 \-_]+$/.test(v))
+                    return "Only letters, numbers, spaces, hyphens and underscores are allowed.";
+                const internal = titleToInternalName(v);
+                if (internal === "base" || internal === "simple-audio-importer")
                     return "This name is reserved.";
                 return "";
-            }
-            function checkVersion(v) {
-                if (!v) return "Required.";
-                return /^\d+\.\d+\.\d+$/.test(v)
-                    ? ""
-                    : "Must be in the format X.Y.Z (e.g. 1.0.0).";
             }
             function checkRequired(v, label) {
                 return v.trim() ? "" : `${label} is required.`;
@@ -434,22 +414,22 @@
                 return !error;
             }
 
+            function titleToInternalName(title) {
+                return title
+                    .trim()
+                    .toLowerCase()
+                    .replace(/[ _]+/g, "-")
+                    .replace(/-+/g, "-")
+                    .replace(/^-|-$/g, "");
+            }
+
             document
-                .getElementById("mod-name")
+                .getElementById("mod-title")
                 .addEventListener("input", function () {
                     setField(
-                        "mod-name",
-                        "err-name",
-                        checkName(this.value.trim()),
-                    );
-                });
-            document
-                .getElementById("mod-version")
-                .addEventListener("input", function () {
-                    setField(
-                        "mod-version",
-                        "err-version",
-                        checkVersion(this.value.trim()),
+                        "mod-title",
+                        "err-title",
+                        checkTitle(this.value.trim()),
                     );
                 });
 
@@ -457,7 +437,6 @@
                 document.getElementById("global-error").textContent = "";
                 document.getElementById("success-msg").textContent = "";
 
-                const name = document.getElementById("mod-name").value.trim();
                 const title = document.getElementById("mod-title").value.trim();
                 const desc = document
                     .getElementById("mod-description")
@@ -465,29 +444,17 @@
                 const author = document
                     .getElementById("mod-author")
                     .value.trim();
-                const version = document
-                    .getElementById("mod-version")
-                    .value.trim();
+                const version = "1.0.0";
+                const name = titleToInternalName(title);
 
                 let ok = true;
-                ok = setField("mod-name", "err-name", checkName(name)) && ok;
                 ok =
-                    setField(
-                        "mod-title",
-                        "err-title",
-                        checkRequired(title, "Title"),
-                    ) && ok;
+                    setField("mod-title", "err-title", checkTitle(title)) && ok;
                 ok =
                     setField(
                         "mod-author",
                         "err-author",
                         checkRequired(author, "Author"),
-                    ) && ok;
-                ok =
-                    setField(
-                        "mod-version",
-                        "err-version",
-                        checkVersion(version),
                     ) && ok;
 
                 if (!ok) {
