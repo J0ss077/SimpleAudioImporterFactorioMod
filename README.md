@@ -2,11 +2,21 @@
 
 A simple mod for importing audios/music/soundFXs into Factorio, mainly made for non-modders and being used in servers (to play music and prank your friends xd)
 
-Go to it's **[Web App](https://j0ss077.github.io/SimpleAudioImporterFactorioMod/)** for creating your own custom mod.
+## How it works?
 
-## Template Tutorial
+The mod works with 2 parts: the importer (this mod) which scans the list of mods in search of the template (or any other mod that meets the same conditions as the template), and then initiates the import attempt.
 
-This template lets you add your own sounds, music, or audio effects to Factorio without writing any code.
+## How do I use it?
+
+1. First, you will need to have the importer installed (this mod). Then you can add as many custom mods as you want (following the same template specifications).
+
+2. To create a custom build of the audios you want to import, visit the importer's [Web-Tool](https://j0ss077.github.io/SimpleAudioImporterFactorioMod) (insert the audios, a few more necessary data, and it will give you a custom `.zip`).
+
+3. Move all the custom `.zip` files to the game's mods folder, and then you can start Factorio.
+
+# Manual Tutorial (using the template)
+
+Here we're gonna create a custom build manually (intended for more experienced users, probably modders themselves).
 
 ### Requirements
 
@@ -15,13 +25,11 @@ This template lets you add your own sounds, music, or audio effects to Factorio 
 
 ## Step 1 — Download the template
 
-Download the [Simple Audio Template](https://github.com/J0ss077/SimpleAudioTemplateFactorioMod) repository as a `.zip` and extract it. The extracted folder is your starting point.
+Download the [Simple-Audio-Template](https://github.com/J0ss077/SimpleAudioTemplateFactorioMod) repository as a `.zip` and extract it. The extracted folder is your starting point.
 
 ## Step 2 — Add your audio files
 
-Copy your `.wav` or `.ogg` files into the `audios/` folder.
-
-For this example, we are adding two songs:
+Copy your `.wav` or `.ogg` files into the `audios/` folder. For this example, we are adding two songs:
 
 ```
 audios/
@@ -31,9 +39,7 @@ audios/
 
 ## Step 3 — Register your audio files
 
-Open `F077-sai-index.lua` with any text editor.
-
-List your files by name, one per line, surrounded by quotes and followed by a comma:
+Open `F077-sai-index.lua` with any text editor. List your files by name, one per line, surrounded by quotes and followed by a comma:
 
 ```lua
 return {
@@ -42,17 +48,13 @@ return {
 }
 ```
 
-The names must match the files in the `audios/` folder exactly, including uppercase and lowercase letters.
-
-`California-Gurls.wav` and `california-gurls.wav` are treated as different names.
+The names must match the files in the `audios/` folder exactly, including uppercase and lowercase letters. `California-Gurls.wav` and `california-gurls.wav` are treated as different names.
 
 Save the file when you are done.
 
 ## Step 4 — Set the display names for your audio files
 
-Open `locale/en/audio-names.cfg` with any text editor.
-
-Add one line per file, following this format:
+Open `locale/en/audio-names.cfg` with any text editor. Add one line per file, following this format:
 
 ```
 filename.wav=Display Name
@@ -68,9 +70,7 @@ sweet-child-o-mine.wav=Sweet Child O' Mine
 
 The left side must match the filename exactly as registered in `F077-sai-index.lua`. The right side is what the player will see inside the game.
 
-Without this step, the game will display the raw internal ID instead of a readable name.
-
-Save the file when you are done.
+Without this step, the game will display the raw internal ID instead of a readable name. Save the file when you are done.
 
 ## Step 5 — Set your mod name and version
 
@@ -147,8 +147,6 @@ You can also open File Explorer, click on the address bar, type `%APPDATA%\Facto
 ```
 ~/Library/Application Support/factorio/mods
 ```
-
-Make sure **Simple Audio Importer** is also present in that same folder.
 
 ## Step 8 — Launch Factorio
 
