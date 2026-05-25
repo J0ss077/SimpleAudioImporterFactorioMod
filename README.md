@@ -151,3 +151,5 @@ Make sure **Simple Audio Importer** is also present in that same folder.
 ## Step 8 — Launch Factorio
 
 Start Factorio. Your sounds will be available through the **Programmable Speaker**, inside the _"instrument"_ called **Simple Audio Importer**.
+
+From here you can do 2 things: share the `.zip` file with your friends (if you have a private server), or publish it to the **Mod Portal** (so you can update it and all the players can easily keep it updated).
