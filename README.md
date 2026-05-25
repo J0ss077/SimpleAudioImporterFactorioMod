@@ -150,4 +150,6 @@ You can also open File Explorer, click on the address bar, type `%APPDATA%\Facto
 ~/Library/Application Support/factorio/mods
 ```
 
-Finally, from here you can do 2 things: share the `.zip` file with your friends (if you have a private server), or publish it to the **Mod Portal** (so your players can automatically download and keep it updated when joining a server).
+##
+
+Finally, from here you can do 2 things: share the `.zip` file with your friends (if you play in a private server), or publish it to the **Mod Portal** as your own (so your players can automatically download and keep it updated when joining a server).
