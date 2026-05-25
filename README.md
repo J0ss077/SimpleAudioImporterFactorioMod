@@ -97,7 +97,7 @@ Save the file when you are done.
 
 ## Step 6 — Package the mod as a `.zip`
 
-Factorio only loads mods packaged as a `.zip` with a specific name. The format is:
+Factorio can load mods both in plain directory and `.zip` files (we're using the second one). The format is:
 
 ```
 mod-name_version.zip
@@ -121,8 +121,6 @@ my-custom-musics_1.0.0.zip
     ├── info.json
     └── ...
 ```
-
-**If the zip file name, the inner folder name, or the `name` field in `info.json` do not all match, Factorio will not load the mod.**
 
 ## Step 7 — Place the mod in the correct folder
 
