@@ -15,6 +15,8 @@ for name, __ in pairs(mods) do
     --
 end
 
+if #notes == 0 then return end
+
 local speaker = data.raw["programmable-speaker"]["programmable-speaker"]
 
 table.insert(speaker.instruments, { name = "simple-audio-importer", notes = notes })
