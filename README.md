@@ -2,6 +2,8 @@
 
 A simple mod for importing audios/music/soundFXs into Factorio, mainly made for non-modders and being used in servers (to play music and prank your friends xd)
 
+Go to it's **[Web App]** for creating your own custom mod.
+
 ## Template Tutorial
 
 This template lets you add your own sounds, music, or audio effects to Factorio without writing any code.
