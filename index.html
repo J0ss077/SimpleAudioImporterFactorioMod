@@ -6,11 +6,8 @@
         <title>Simple Audio Importer — Mod Builder</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <style>
-            *,
-            *::before,
-            *::after {
-                box-sizing: border-box;
-            }
+            *, *::before, *::after { box-sizing: border-box; }
+
             body {
                 font-family: sans-serif;
                 font-size: 15px;
@@ -21,15 +18,9 @@
                 background: #fff;
                 line-height: 1.5;
             }
-            h1 {
-                font-size: 1.25rem;
-                margin-bottom: 0.25rem;
-            }
-            .subtitle {
-                color: #555;
-                font-size: 0.875rem;
-                margin: 0 0 1.5rem;
-            }
+
+            h1 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+
             h2 {
                 font-size: 0.95rem;
                 font-weight: 700;
@@ -40,17 +31,43 @@
                 border-top: 1px solid #ddd;
                 padding-top: 1.25rem;
             }
+
             label {
                 display: block;
                 font-weight: 600;
                 font-size: 0.875rem;
                 margin-top: 1rem;
             }
-            .hint {
-                font-weight: 400;
-                color: #777;
-                font-size: 0.8rem;
+
+            code {
+                font-family: monospace;
+                background: #f4f4f4;
+                padding: 1px 4px;
+                border-radius: 2px;
+                font-size: 0.85em;
             }
+
+            footer {
+                margin-top: 3rem;
+                padding-top: 1rem;
+                border-top: 1px solid #eee;
+                font-size: 0.8rem;
+                color: #aaa;
+            }
+
+            .subtitle { color: #555; font-size: 0.875rem; margin: 0 0 1.5rem; }
+
+            .hint { font-weight: 400; color: #777; font-size: 0.8rem; }
+
+            .notice {
+                background: #fff8e6;
+                border: 1px solid #e6c200;
+                border-radius: 3px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
             input[type="text"] {
                 display: block;
                 width: 100%;
@@ -60,19 +77,18 @@
                 border-radius: 3px;
                 margin-top: 3px;
             }
-            input[type="text"]:focus {
-                outline: 2px solid #0066cc;
-                border-color: transparent;
-            }
-            input[type="text"].error {
-                border-color: #cc0000;
-            }
+
+            input[type="text"]:focus { outline: 2px solid #0066cc; border-color: transparent; }
+
+            input[type="text"].error { border-color: #cc0000; }
+
             .field-error {
                 color: #cc0000;
                 font-size: 0.8rem;
                 margin-top: 3px;
                 min-height: 1em;
             }
+
             .drop-zone {
                 border: 2px dashed #bbb;
                 border-radius: 4px;
@@ -84,28 +100,26 @@
                 margin-top: 0.5rem;
                 transition: background 0.15s;
             }
-            .drop-zone:hover,
-            .drop-zone.dragover {
+
+            .drop-zone:hover, .drop-zone.dragover {
                 background: #f4f8ff;
                 border-color: #0066cc;
                 color: #0066cc;
             }
-            #file-messages {
-                font-size: 0.85rem;
-                margin-top: 0.5rem;
-            }
-            .msg-error {
-                color: #cc0000;
-            }
-            .msg-warn {
-                color: #996600;
-            }
+
+            #file-messages { font-size: 0.85rem; margin-top: 0.5rem; }
+
+            .msg-error { color: #cc0000; }
+
+            .msg-warn { color: #996600; }
+
             table {
                 width: 100%;
                 border-collapse: collapse;
                 margin-top: 0.75rem;
                 font-size: 0.875rem;
             }
+
             th {
                 text-align: left;
                 font-weight: 600;
@@ -116,14 +130,15 @@
                 text-transform: uppercase;
                 letter-spacing: 0.04em;
             }
+
             td {
                 padding: 5px 6px;
                 border-bottom: 1px solid #eee;
                 vertical-align: middle;
             }
-            td input[type="text"] {
-                margin-top: 0;
-            }
+
+            td input[type="text"] { margin-top: 0; }
+
             .btn-remove {
                 background: none;
                 border: none;
@@ -133,17 +148,9 @@
                 padding: 0 4px;
                 line-height: 1;
             }
-            .btn-remove:hover {
-                color: #cc0000;
-            }
-            .notice {
-                background: #fff8e6;
-                border: 1px solid #e6c200;
-                border-radius: 3px;
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-            }
+
+            .btn-remove:hover { color: #cc0000; }
+
             button#btn-generate {
                 margin-top: 1rem;
                 padding: 9px 20px;
@@ -155,59 +162,41 @@
                 background: #0066cc;
                 color: #fff;
             }
-            button#btn-generate:hover {
-                background: #0052a3;
-            }
+
+            button#btn-generate:hover { background: #0052a3; }
+
             #global-error {
                 color: #cc0000;
                 font-size: 0.875rem;
                 margin-top: 0.75rem;
             }
+
             #success-msg {
                 color: #007700;
                 font-size: 0.875rem;
                 margin-top: 0.75rem;
                 font-weight: 600;
             }
-            .paths {
-                margin-top: 1rem;
-                font-size: 0.875rem;
-            }
-            .paths table {
-                margin-top: 0.4rem;
-                font-size: 0.85rem;
-            }
-            .paths td {
-                padding: 4px 8px;
-                border-bottom: 1px solid #eee;
-            }
+
+            .paths { margin-top: 1rem; font-size: 0.875rem; }
+
+            .paths table { margin-top: 0.4rem; font-size: 0.85rem; }
+
+            .paths td { padding: 4px 8px; border-bottom: 1px solid #eee; }
+
             .paths td:first-child {
                 font-weight: 600;
                 color: #555;
                 white-space: nowrap;
                 width: 80px;
             }
-            code {
-                font-family: monospace;
-                background: #f4f4f4;
-                padding: 1px 4px;
-                border-radius: 2px;
-                font-size: 0.85em;
-            }
-            footer {
-                margin-top: 3rem;
-                padding-top: 1rem;
-                border-top: 1px solid #eee;
-                font-size: 0.8rem;
-                color: #aaa;
-            }
         </style>
     </head>
     <body>
+
         <h1>Simple Audio Importer — Mod Builder</h1>
         <p class="subtitle">
-            Builds a ready-to-install Factorio mod from your audio files. No
-            coding required.
+            Builds a ready-to-install Factorio mod from your audio files. No coding required.
         </p>
 
         <div class="notice">
@@ -218,18 +207,13 @@
         <h2>Step 1 — Audio files</h2>
 
         <div class="drop-zone" id="drop-zone">
-            Drag &amp; drop <code>.wav</code> / <code>.ogg</code> files here, or
-            click to select
-            <input
-                type="file"
-                id="file-input"
-                accept=".wav,.ogg"
-                multiple
-                style="display: none"
-            />
+            Drag &amp; drop <code>.wav</code> / <code>.ogg</code> files here, or click to select
+            <input type="file" id="file-input" accept=".wav,.ogg" multiple style="display:none" />
         </div>
+
         <div id="file-messages"></div>
-        <div id="file-table-wrap" style="display: none">
+
+        <div id="file-table-wrap" style="display:none">
             <table>
                 <thead>
                     <tr>
@@ -244,63 +228,34 @@
 
         <h2>Step 2 — Mod info</h2>
 
-        <label for="mod-title"
-            >Title
-            <span class="hint"
-                >— shown in Factorio's mod menu. Only letters, numbers, spaces,
-                <code>-</code> and <code>_</code>.</span
-            ></label
-        >
-        <input
-            type="text"
-            id="mod-title"
-            placeholder="My Custom Music"
-            maxlength="80"
-        />
+        <label for="mod-title">
+            Title
+            <span class="hint">— shown in Factorio's mod menu. Only letters, numbers, spaces, <code>-</code> and <code>_</code>.</span>
+        </label>
+        <input type="text" id="mod-title" placeholder="My Custom Music" maxlength="80" />
         <div class="field-error" id="err-title"></div>
 
-        <label for="mod-description"
-            >Description <span class="hint">— optional</span></label
-        >
-        <input
-            type="text"
-            id="mod-description"
-            placeholder="Adds custom music to Factorio."
-            maxlength="200"
-        />
+        <label for="mod-description">
+            Description <span class="hint">— optional</span>
+        </label>
+        <input type="text" id="mod-description" placeholder="Adds custom music to Factorio." maxlength="200" />
 
         <label for="mod-author">Author</label>
-        <input
-            type="text"
-            id="mod-author"
-            placeholder="YourName"
-            maxlength="60"
-        />
+        <input type="text" id="mod-author" placeholder="YourName" maxlength="60" />
         <div class="field-error" id="err-author"></div>
 
         <h2>Step 3 — Download</h2>
 
-        <button id="btn-generate" onclick="generate()">Download .zip</button>
+        <button id="btn-generate">Download .zip</button>
         <div id="global-error"></div>
         <div id="success-msg"></div>
 
         <div class="paths">
             <strong>Where to place the <code>.zip</code> file:</strong>
             <table>
-                <tr>
-                    <td>Windows</td>
-                    <td><code>%APPDATA%\Factorio\mods</code></td>
-                </tr>
-                <tr>
-                    <td>Linux</td>
-                    <td><code>~/.factorio/mods</code></td>
-                </tr>
-                <tr>
-                    <td>macOS</td>
-                    <td>
-                        <code>~/Library/Application Support/factorio/mods</code>
-                    </td>
-                </tr>
+                <tr><td>Windows</td><td><code>%APPDATA%\Factorio\mods</code></td></tr>
+                <tr><td>Linux</td>  <td><code>~/.factorio/mods</code></td></tr>
+                <tr><td>macOS</td>  <td><code>~/Library/Application Support/factorio/mods</code></td></tr>
             </table>
         </div>
 
@@ -310,226 +265,369 @@
         </footer>
 
         <script>
-            const files = [];
 
-            // Drop zone
-            const dropZone = document.getElementById("drop-zone");
-            const fileInput = document.getElementById("file-input");
-            dropZone.addEventListener("click", () => fileInput.click());
-            dropZone.addEventListener("dragover", (e) => {
-                e.preventDefault();
-                dropZone.classList.add("dragover");
-            });
-            dropZone.addEventListener("dragleave", () =>
-                dropZone.classList.remove("dragover"),
-            );
-            dropZone.addEventListener("drop", (e) => {
-                e.preventDefault();
-                dropZone.classList.remove("dragover");
-                handleFiles(Array.from(e.dataTransfer.files));
-            });
-            fileInput.addEventListener("change", () => {
-                handleFiles(Array.from(fileInput.files));
-                fileInput.value = "";
-            });
+        // ═══════════════════════════════════════════════════════════════════
+        // CONSTANTS
+        // ═══════════════════════════════════════════════════════════════════
 
-            function handleFiles(incoming) {
-                const msgs = [];
-                for (const f of incoming) {
-                    const ext = f.name
-                        .slice(f.name.lastIndexOf("."))
-                        .toLowerCase();
-                    if (ext === ".mp3") {
-                        msgs.push({
-                            cls: "msg-error",
-                            text: `"${f.name}": .mp3 is not supported by Factorio. Convert to .wav or .ogg first.`,
-                        });
-                        continue;
-                    }
-                    if (ext !== ".wav" && ext !== ".ogg") {
-                        msgs.push({
-                            cls: "msg-error",
-                            text: `"${f.name}": unsupported format. Only .wav and .ogg are accepted.`,
-                        });
-                        continue;
-                    }
-                    if (files.some((e) => e.file.name === f.name)) {
-                        msgs.push({
-                            cls: "msg-warn",
-                            text: `"${f.name}": already added.`,
-                        });
-                        continue;
-                    }
-                    if (/[^a-zA-Z0-9._\-]/.test(f.name))
-                        msgs.push({
-                            cls: "msg-warn",
-                            text: `"${f.name}": filename has special characters or spaces, which may cause issues. Consider renaming.`,
-                        });
-                    const base = f.name.slice(0, f.name.lastIndexOf("."));
-                    const displayName = base
-                        .replace(/[-_]/g, " ")
-                        .replace(/\b\w/g, (c) => c.toUpperCase());
-                    files.push({ file: f, displayName });
-                }
-                document.getElementById("file-messages").innerHTML = msgs
-                    .map((m) => `<div class="${m.cls}">${m.text}</div>`)
-                    .join("");
-                renderTable();
-            }
+        const MOD_VERSION       = "1.0.0";
+        const FACTORIO_VERSION  = "2.0";
+        const RESERVED_NAMES    = ["base", "simple-audio-importer"];
+        const ACCEPTED_EXTS     = [".wav", ".ogg"];
+        const SPECIAL_CHAR_RE   = /[^a-zA-Z0-9._\-]/;   // flags unsafe filenames
+        const TITLE_VALID_RE    = /^[a-zA-Z0-9 \-_]+$/;
 
-            function renderTable() {
-                const tbody = document.getElementById("file-tbody");
-                document.getElementById("file-table-wrap").style.display =
-                    files.length ? "block" : "none";
-                tbody.innerHTML = "";
-                files.forEach((entry, i) => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `<td><code>${esc(entry.file.name)}</code></td>
-                        <td><input type="text" value="${esc(entry.displayName)}" oninput="files[${i}].displayName=this.value" /></td>
-                        <td><button class="btn-remove" onclick="files.splice(${i},1);renderTable()" title="Remove">x</button></td>`;
-                    tbody.appendChild(tr);
-                });
-            }
+        // ═══════════════════════════════════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════════════════════════════════
 
-            // Validation
-            function checkTitle(v) {
-                if (!v) return "Required.";
-                if (v.length < 3) return "Minimum 3 characters.";
-                if (!/^[a-zA-Z0-9 \-_]+$/.test(v))
-                    return "Only letters, numbers, spaces, hyphens and underscores are allowed.";
-                const internal = titleToInternalName(v);
-                if (internal === "base" || internal === "simple-audio-importer")
-                    return "This name is reserved.";
-                return "";
-            }
-            function checkRequired(v, label) {
-                return v.trim() ? "" : `${label} is required.`;
-            }
+        /** @type {{ file: File, displayName: string }[]} */
+        const audioFiles = [];
 
-            function setField(inputId, errId, error) {
-                document
-                    .getElementById(inputId)
-                    .classList.toggle("error", !!error);
-                document.getElementById(errId).textContent = error;
-                return !error;
-            }
+        // ═══════════════════════════════════════════════════════════════════
+        // DOM HELPERS
+        // ═══════════════════════════════════════════════════════════════════
 
-            function titleToInternalName(title) {
-                return title
-                    .trim()
-                    .toLowerCase()
-                    .replace(/[ _]+/g, "-")
-                    .replace(/-+/g, "-")
-                    .replace(/^-|-$/g, "");
-            }
+        /** Shorthand for document.getElementById */
+        const el = (id) => document.getElementById(id);
 
-            document
-                .getElementById("mod-title")
-                .addEventListener("input", function () {
-                    setField(
-                        "mod-title",
-                        "err-title",
-                        checkTitle(this.value.trim()),
-                    );
-                });
+        /**
+         * Sets or clears a field's error state.
+         * @param {string} inputId - ID of the <input>
+         * @param {string} errId   - ID of the error <div>
+         * @param {string} error   - Error message, or "" to clear
+         * @returns {boolean} true if no error
+         */
+        function setFieldError(inputId, errId, error) {
+            el(inputId).classList.toggle("error", !!error);
+            el(errId).textContent = error;
+            return !error;
+        }
 
-            async function generate() {
-                document.getElementById("global-error").textContent = "";
-                document.getElementById("success-msg").textContent = "";
+        /** HTML-escape a string for safe insertion into innerHTML */
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
 
-                const title = document.getElementById("mod-title").value.trim();
-                const desc = document
-                    .getElementById("mod-description")
-                    .value.trim();
-                const author = document
-                    .getElementById("mod-author")
-                    .value.trim();
-                const version = "1.0.0";
-                const name = titleToInternalName(title);
+        /** Show a list of messages under the drop zone */
+        function showFileMessages(messages) {
+            el("file-messages").innerHTML = messages
+                .map((m) => `<div class="${m.cls}">${m.text}</div>`)
+                .join("");
+        }
 
-                let ok = true;
-                ok =
-                    setField("mod-title", "err-title", checkTitle(title)) && ok;
-                ok =
-                    setField(
-                        "mod-author",
-                        "err-author",
-                        checkRequired(author, "Author"),
-                    ) && ok;
+        /** Set the global status message (error or success) */
+        function setSuccessMsg(msg)    { el("success-msg").textContent  = msg; }
+        function setGlobalError(msg)   { el("global-error").textContent = msg; }
+        function clearStatusMessages() { setGlobalError(""); setSuccessMsg(""); }
 
-                if (!ok) {
-                    document.getElementById("global-error").textContent =
-                        "Fix the errors above before generating.";
-                    return;
-                }
-                if (!files.length) {
-                    document.getElementById("global-error").textContent =
-                        "Add at least one audio file.";
-                    return;
-                }
+        // ═══════════════════════════════════════════════════════════════════
+        // VALIDATION
+        // ═══════════════════════════════════════════════════════════════════
 
-                for (const e of files) {
-                    if (!e.displayName.trim()) {
-                        document.getElementById("global-error").textContent =
-                            `Display name for "${e.file.name}" is empty.`;
-                        return;
-                    }
-                }
+        /**
+         * Validates the mod title field.
+         * @returns {string} Error message, or "" if valid
+         */
+        function validateTitle(value) {
+            if (!value)           return "Required.";
+            if (value.length < 3) return "Minimum 3 characters.";
+            if (!TITLE_VALID_RE.test(value))
+                return "Only letters, numbers, spaces, hyphens and underscores are allowed.";
+            if (RESERVED_NAMES.includes(titleToInternalName(value)))
+                return "This name is reserved.";
+            return "";
+        }
 
-                const infoJson = JSON.stringify(
-                    {
-                        name,
-                        version,
-                        title,
-                        description: desc || "Adds custom audio to Factorio.",
-                        author,
-                        factorio_version: "2.0",
-                        dependencies: ["base", "simple-audio-importer"],
-                    },
-                    null,
-                    4,
-                );
-                const indexLua = `return {\n${files.map((e) => `    "${e.file.name}",`).join("\n")}\n}\n`;
-                const audioCfg = `[programmable-speaker-note]\n${files.map((e) => `${e.file.name}=${e.displayName.trim()}`).join("\n")}\n`;
+        /**
+         * Validates a required plain-text field.
+         * @returns {string} Error message, or "" if valid
+         */
+        function validateRequired(value, label) {
+            return value.trim() ? "" : `${label} is required.`;
+        }
 
-                try {
-                    const zip = new JSZip();
-                    const folder = zip.folder(name);
-                    folder.file("info.json", infoJson);
-                    folder.file("F077-sai-index.lua", indexLua);
-                    folder
-                        .folder("locale")
-                        .folder("en")
-                        .file("audio-names.cfg", audioCfg);
-                    const audios = folder.folder("audios");
-                    for (const e of files)
-                        audios.file(e.file.name, await e.file.arrayBuffer());
+        // ═══════════════════════════════════════════════════════════════════
+        // NAME UTILITIES
+        // ═══════════════════════════════════════════════════════════════════
 
-                    const blob = await zip.generateAsync({
-                        type: "blob",
-                        compression: "DEFLATE",
+        /**
+         * Converts a human-readable mod title to a Factorio-safe internal name.
+         * e.g. "My Cool Mod" → "my-cool-mod"
+         */
+        function titleToInternalName(title) {
+            return title
+                .trim()
+                .toLowerCase()
+                .replace(/[ _]+/g, "-")
+                .replace(/-+/g, "-")
+                .replace(/^-|-$/g, "");
+        }
+
+        /**
+         * Derives a display name from a raw filename.
+         * e.g. "my_cool-track.wav" → "My Cool Track"
+         */
+        function filenameToDisplayName(filename) {
+            const base = filename.slice(0, filename.lastIndexOf("."));
+            return base
+                .replace(/[-_]/g, " ")
+                .replace(/\b\w/g, (c) => c.toUpperCase());
+        }
+
+        /**
+         * Extracts the lowercase extension from a filename (including the dot).
+         * e.g. "track.WAV" → ".wav"
+         */
+        function getExtension(filename) {
+            return filename.slice(filename.lastIndexOf(".")).toLowerCase();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // FILE HANDLING
+        // ═══════════════════════════════════════════════════════════════════
+
+        /**
+         * Processes an array of File objects dropped or selected by the user.
+         * Rejects unsupported formats and duplicates; warns on unsafe filenames.
+         * @param {File[]} incoming
+         */
+        function handleFiles(incoming) {
+            const messages = [];
+
+            for (const file of incoming) {
+                const ext = getExtension(file.name);
+
+                if (ext === ".mp3") {
+                    messages.push({
+                        cls: "msg-error",
+                        text: `"${file.name}": .mp3 is not supported by Factorio. Convert to .wav or .ogg first.`,
                     });
-                    const a = document.createElement("a");
-                    a.href = URL.createObjectURL(blob);
-                    a.download = `${name}_${version}.zip`;
-                    a.click();
-                    URL.revokeObjectURL(a.href);
-                    document.getElementById("success-msg").textContent =
-                        `"${name}_${version}.zip" downloaded. Place it in your Factorio mods folder.`;
-                } catch (err) {
-                    document.getElementById("global-error").textContent =
-                        `Error building zip: ${err.message}`;
-                    console.error(err);
+                    continue;
                 }
+
+                if (!ACCEPTED_EXTS.includes(ext)) {
+                    messages.push({
+                        cls: "msg-error",
+                        text: `"${file.name}": unsupported format. Only .wav and .ogg are accepted.`,
+                    });
+                    continue;
+                }
+
+                if (audioFiles.some((entry) => entry.file.name === file.name)) {
+                    messages.push({
+                        cls: "msg-warn",
+                        text: `"${file.name}": already added.`,
+                    });
+                    continue;
+                }
+
+                if (SPECIAL_CHAR_RE.test(file.name)) {
+                    messages.push({
+                        cls: "msg-warn",
+                        text: `"${file.name}": filename has special characters or spaces, which may cause issues. Consider renaming.`,
+                    });
+                }
+
+                audioFiles.push({
+                    file,
+                    displayName: filenameToDisplayName(file.name),
+                });
             }
 
-            function esc(s) {
-                return s
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;");
+            showFileMessages(messages);
+            renderFileTable();
+        }
+
+        /**
+         * Re-renders the file table from the current audioFiles state.
+         * Shows or hides the table wrapper depending on whether files exist.
+         */
+        function renderFileTable() {
+            const tbody = el("file-tbody");
+            el("file-table-wrap").style.display = audioFiles.length ? "block" : "none";
+            tbody.innerHTML = "";
+
+            audioFiles.forEach((entry, index) => {
+                const tr = document.createElement("tr");
+
+                // Filename cell
+                const tdFile = document.createElement("td");
+                tdFile.innerHTML = `<code>${escapeHtml(entry.file.name)}</code>`;
+
+                // Editable display-name cell
+                const tdName = document.createElement("td");
+                const nameInput = document.createElement("input");
+                nameInput.type  = "text";
+                nameInput.value = entry.displayName;
+                nameInput.addEventListener("input", () => {
+                    audioFiles[index].displayName = nameInput.value;
+                });
+                tdName.appendChild(nameInput);
+
+                // Remove button cell
+                const tdRemove = document.createElement("td");
+                const removeBtn = document.createElement("button");
+                removeBtn.className   = "btn-remove";
+                removeBtn.title       = "Remove";
+                removeBtn.textContent = "x";
+                removeBtn.addEventListener("click", () => {
+                    audioFiles.splice(index, 1);
+                    renderFileTable();
+                });
+                tdRemove.appendChild(removeBtn);
+
+                tr.append(tdFile, tdName, tdRemove);
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // ZIP GENERATION — FILE CONTENT BUILDERS
+        // ═══════════════════════════════════════════════════════════════════
+
+        /**
+         * Builds info.json content for the mod.
+         * @param {{ name, title, description, author }} meta
+         * @returns {string} JSON string
+         */
+        function buildInfoJson({ name, title, description, author }) {
+            return JSON.stringify(
+                {
+                    name,
+                    version: MOD_VERSION,
+                    title,
+                    description: description || "Adds custom audio to Factorio.",
+                    author,
+                    factorio_version: FACTORIO_VERSION,
+                    dependencies: ["base", "simple-audio-importer"],
+                },
+                null,
+                4
+            );
+        }
+
+        /**
+         * Builds the Lua index file listing all audio filenames.
+         * @returns {string} Lua source
+         */
+        function buildIndexLua() {
+            const lines = audioFiles.map((e) => `    "${e.file.name}",`).join("\n");
+            return `return {\n${lines}\n}\n`;
+        }
+
+        /**
+         * Builds the locale .cfg file mapping filenames to display names.
+         * @returns {string} .cfg content
+         */
+        function buildAudioCfg() {
+            const entries = audioFiles
+                .map((e) => `${e.file.name}=${e.displayName.trim()}`)
+                .join("\n");
+            return `[programmable-speaker-note]\n${entries}\n`;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // ZIP GENERATION — MAIN FLOW
+        // ═══════════════════════════════════════════════════════════════════
+
+        /**
+         * Validates all inputs, builds the ZIP, and triggers a download.
+         * Called by the "Download .zip" button.
+         */
+        async function generate() {
+            clearStatusMessages();
+
+            // ── Collect form values ──────────────────────────────────────
+            const title  = el("mod-title").value.trim();
+            const desc   = el("mod-description").value.trim();
+            const author = el("mod-author").value.trim();
+            const name   = titleToInternalName(title);
+
+            // ── Validate fields ──────────────────────────────────────────
+            const titleOk  = setFieldError("mod-title",  "err-title",  validateTitle(title));
+            const authorOk = setFieldError("mod-author", "err-author", validateRequired(author, "Author"));
+
+            if (!titleOk || !authorOk) {
+                setGlobalError("Fix the errors above before generating.");
+                return;
             }
+
+            if (!audioFiles.length) {
+                setGlobalError("Add at least one audio file.");
+                return;
+            }
+
+            const emptyName = audioFiles.find((e) => !e.displayName.trim());
+            if (emptyName) {
+                setGlobalError(`Display name for "${emptyName.file.name}" is empty.`);
+                return;
+            }
+
+            // ── Build and download ZIP ───────────────────────────────────
+            try {
+                const zip = new JSZip();
+                const folder = zip.folder(name);
+
+                folder.file("info.json",          buildInfoJson({ name, title, description: desc, author }));
+                folder.file("F077-sai-index.lua", buildIndexLua());
+                folder.folder("locale").folder("en").file("audio-names.cfg", buildAudioCfg());
+
+                const audios = folder.folder("audios");
+                for (const entry of audioFiles) {
+                    audios.file(entry.file.name, await entry.file.arrayBuffer());
+                }
+
+                const blob     = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+                const filename = `${name}_${MOD_VERSION}.zip`;
+
+                const anchor    = document.createElement("a");
+                anchor.href     = URL.createObjectURL(blob);
+                anchor.download = filename;
+                anchor.click();
+                URL.revokeObjectURL(anchor.href);
+
+                setSuccessMsg(`"${filename}" downloaded. Place it in your Factorio mods folder.`);
+            } catch (err) {
+                setGlobalError(`Error building zip: ${err.message}`);
+                console.error(err);
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // EVENT WIRING
+        // ═══════════════════════════════════════════════════════════════════
+
+        // ── Drop zone ────────────────────────────────────────────────────
+        const dropZone = el("drop-zone");
+        const fileInput = el("file-input");
+
+        dropZone.addEventListener("click",     ()  => fileInput.click());
+        dropZone.addEventListener("dragover",  (e) => { e.preventDefault(); dropZone.classList.add("dragover"); });
+        dropZone.addEventListener("dragleave", ()  => dropZone.classList.remove("dragover"));
+        dropZone.addEventListener("drop",      (e) => {
+            e.preventDefault();
+            dropZone.classList.remove("dragover");
+            handleFiles(Array.from(e.dataTransfer.files));
+        });
+
+        fileInput.addEventListener("change", () => {
+            handleFiles(Array.from(fileInput.files));
+            fileInput.value = ""; // reset so same file can be re-added after removal
+        });
+
+        // ── Live title validation ────────────────────────────────────────
+        el("mod-title").addEventListener("input", function () {
+            setFieldError("mod-title", "err-title", validateTitle(this.value.trim()));
+        });
+
+        // ── Generate button ──────────────────────────────────────────────
+        el("btn-generate").addEventListener("click", generate);
+
         </script>
     </body>
 </html>
