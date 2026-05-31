@@ -6,6 +6,7 @@
         <title>Simple Audio Importer — Mod Builder</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <style>
+
             *, *::before, *::after { box-sizing: border-box; }
 
             body {
@@ -190,6 +191,7 @@
                 white-space: nowrap;
                 width: 80px;
             }
+
         </style>
     </head>
     <body>
@@ -542,13 +544,11 @@
         async function generate() {
             clearStatusMessages();
 
-            // ── Collect form values ──────────────────────────────────────
             const title  = el("mod-title").value.trim();
             const desc   = el("mod-description").value.trim();
             const author = el("mod-author").value.trim();
             const name   = titleToInternalName(title);
 
-            // ── Validate fields ──────────────────────────────────────────
             const titleOk  = setFieldError("mod-title",  "err-title",  validateTitle(title));
             const authorOk = setFieldError("mod-author", "err-author", validateRequired(author, "Author"));
 
@@ -568,7 +568,6 @@
                 return;
             }
 
-            // ── Build and download ZIP ───────────────────────────────────
             try {
                 const zip = new JSZip();
                 const folder = zip.folder(name);
@@ -602,7 +601,6 @@
         // EVENT WIRING
         // ═══════════════════════════════════════════════════════════════════
 
-        // ── Drop zone ────────────────────────────────────────────────────
         const dropZone = el("drop-zone");
         const fileInput = el("file-input");
 
@@ -620,12 +618,10 @@
             fileInput.value = ""; // reset so same file can be re-added after removal
         });
 
-        // ── Live title validation ────────────────────────────────────────
         el("mod-title").addEventListener("input", function () {
             setFieldError("mod-title", "err-title", validateTitle(this.value.trim()));
         });
 
-        // ── Generate button ──────────────────────────────────────────────
         el("btn-generate").addEventListener("click", generate);
 
         </script>
