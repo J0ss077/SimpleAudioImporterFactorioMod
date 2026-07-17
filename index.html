@@ -90,6 +90,17 @@
                 min-height: 1em;
             }
 
+            .factorio-version-warning {
+                background: #fff3cd;
+                border: 1px solid #ffca2c;
+                color: #664d03;
+                padding: 8px 12px;
+                border-radius: 4px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-top: 6px;
+            }
+
             .drop-zone {
                 border: 2px dashed #bbb;
                 border-radius: 4px;
@@ -246,6 +257,20 @@
         <input type="text" id="mod-author" placeholder="YourName" maxlength="60" />
         <div class="field-error" id="err-author"></div>
 
+        <label for="mod-factorio-version">
+            Factorio version
+            <span class="hint">— required. Choose target game version for this build.</span>
+        </label>
+        <select id="mod-factorio-version">
+            <option value="" selected disabled>— Select a version —</option>
+            <option value="2.0">2.0</option>
+            <option value="2.1">2.1</option>
+        </select>
+        <div class="field-error" id="err-factorio-version"></div>
+        <div id="factorio-version-warning" class="factorio-version-warning">
+            You MUST select a Factorio version before generating your build.
+        </div>
+
         <h2>Step 3 — Download</h2>
 
         <button id="btn-generate">Download .zip</button>
@@ -272,12 +297,11 @@
         // CONSTANTS
         // ═══════════════════════════════════════════════════════════════════
 
-        const MOD_VERSION       = "1.0.0";
-        const FACTORIO_VERSION  = "2.0";
-        const RESERVED_NAMES    = ["base", "simple-audio-importer"];
-        const ACCEPTED_EXTS     = [".wav", ".ogg"];
-        const SPECIAL_CHAR_RE   = /[^a-zA-Z0-9._\-]/;   // flags unsafe filenames
-        const TITLE_VALID_RE    = /^[a-zA-Z0-9 \-_]+$/;
+        const MOD_VERSION     = "1.0.0";
+        const RESERVED_NAMES  = ["base", "simple-audio-importer"];
+        const ACCEPTED_EXTS   = [".wav", ".ogg"];
+        const SPECIAL_CHAR_RE = /[^a-zA-Z0-9._\-]/;   // flag unsafe filenames
+        const TITLE_VALID_RE  = /^[a-zA-Z0-9 \-_]+$/;
 
         // ═══════════════════════════════════════════════════════════════════
         // STATE
@@ -343,6 +367,10 @@
             if (RESERVED_NAMES.includes(titleToInternalName(value)))
                 return "This name is reserved.";
             return "";
+        }
+
+        function validateFactorioVersion(value) {
+            return value ? "" : "You must select a Factorio version.";
         }
 
         /**
@@ -497,7 +525,7 @@
          * @param {{ name, title, description, author }} meta
          * @returns {string} JSON string
          */
-        function buildInfoJson({ name, title, description, author }) {
+        function buildInfoJson({ name, title, description, author, factorioVersion }) {
             return JSON.stringify(
                 {
                     name,
@@ -505,7 +533,7 @@
                     title,
                     description: description || "Adds custom audio to Factorio.",
                     author,
-                    factorio_version: FACTORIO_VERSION,
+                    factorio_version: factorioVersion,
                     dependencies: ["base", "simple-audio-importer"],
                 },
                 null,
@@ -544,15 +572,17 @@
         async function generate() {
             clearStatusMessages();
 
-            const title  = el("mod-title").value.trim();
-            const desc   = el("mod-description").value.trim();
-            const author = el("mod-author").value.trim();
-            const name   = titleToInternalName(title);
+            const title           = el("mod-title").value.trim();
+            const desc            = el("mod-description").value.trim();
+            const author          = el("mod-author").value.trim();
+            const factorioVersion = el("mod-factorio-version").value;
+            const name            = titleToInternalName(title);
 
-            const titleOk  = setFieldError("mod-title",  "err-title",  validateTitle(title));
-            const authorOk = setFieldError("mod-author", "err-author", validateRequired(author, "Author"));
+            const titleOk   = setFieldError("mod-title",            "err-title",            validateTitle(title));
+            const authorOk  = setFieldError("mod-author",           "err-author",           validateRequired(author, "Author"));
+            const versionOk = setFieldError("mod-factorio-version", "err-factorio-version", validateFactorioVersion(factorioVersion));
 
-            if (!titleOk || !authorOk) {
+            if (!titleOk || !authorOk || !versionOk) {
                 setGlobalError("Fix the errors above before generating.");
                 return;
             }
@@ -572,7 +602,7 @@
                 const zip = new JSZip();
                 const folder = zip.folder(name);
 
-                folder.file("info.json",          buildInfoJson({ name, title, description: desc, author }));
+                folder.file("info.json", buildInfoJson({ name, title, description: desc, author, factorioVersion }));
                 folder.file("F077-sai-index.lua", buildIndexLua());
                 folder.folder("locale").folder("en").file("audio-names.cfg", buildAudioCfg());
 
