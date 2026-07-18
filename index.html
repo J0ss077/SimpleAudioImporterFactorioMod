@@ -94,13 +94,6 @@
                 border-radius: 3px;
                 margin-top: 3px;
                 background-color: #fff;
-                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23555'/></svg>");
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                appearance: none;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                cursor: pointer;
             }
 
             select#mod-factorio-version:focus {
@@ -119,18 +112,6 @@
                 font-size: 0.8rem;
                 margin-top: 3px;
                 min-height: 1em;
-            }
-
-            .notice-required {
-                background: #fff8e6;
-                border: 1px solid #e6c200;
-                border-left: 4px solid #cc8800;
-                border-radius: 3px;
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                color: #664400;
-                margin-top: 6px;
             }
 
             .drop-zone {
@@ -299,7 +280,7 @@
             <option value="2.1">2.1</option>
         </select>
         <div class="field-error" id="err-factorio-version"></div>
-        <div class="notice-required">
+        <div class="notice">
             You MUST select a Factorio version before generating your build.
         </div>
 
