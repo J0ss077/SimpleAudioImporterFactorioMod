@@ -94,6 +94,7 @@ Open `info.json` with any text editor and fill in your own values:
 - `title` > the name shown in Factorio's mod menu.
 - `description` > a short description of your mod.
 - `author` > your name or username.
+- `factorio_version` > change to **2.1** if needed.
 
 **Do not change or remove the `dependencies` line.** Removing it could cause the mod to fail.
 
